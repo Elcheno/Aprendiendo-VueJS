@@ -1,25 +1,12 @@
 <script setup lang="ts">
-import './index.css';
-import { Button } from '@/components/ui/button';
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
+import Header from './components/header-component.vue';
 
 </script>
 
 <template>
-  <header>
+  <Header />
 
-    <Button>SHADCN</Button>
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <!--<RouterView />-->
+  <router-view />
+  
 </template>
