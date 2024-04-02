@@ -13,7 +13,7 @@ export const useSessionStore = defineStore('session', () => {
         window.location.reload();
     }
     function loadSession() {
-        const cookie = window.document.cookie;
+        const cookie = window.document.cookie;        
         if (cookie) {
             const session = JSON.parse(cookie.split('=')[1]);
             setSession(session);

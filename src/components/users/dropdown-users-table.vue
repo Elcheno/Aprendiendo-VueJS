@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { IconDropdown } from '../icons';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { updateUserState } from '@/services/data-public';
 import { useUsersStore } from '@/stores/users';
 
@@ -16,22 +16,22 @@ const props = defineProps([
   'user'
 ])
 
-const user = props.user;
+let user = props.user;
 const users = useUsersStore();
 
-const updateStateUser = async () => {
-    console.log(user);
-    
-    if (user.state === 'active') {
-        const response = await updateUserState({ id: user.id, state: 'inactive' });
-        console.log(response);
-        users.users.userList.splice(users.users.userList.findIndex((u: any) => u.id === user.id), 1, response);
+watchEffect( async () => {
+    user = props.user;
+});
+
+const updateStateUser = async () => {    
+    if (user.state === 'active') {        
+        await updateUserState({ id: user.id, state: 'inactive' });
         users.rehidrate(); 
+
     } else {
-        const response = await updateUserState({ id: user.id, state: 'active' });     
-        console.log(response); 
-        users.users.userList.splice(users.users.userList.findIndex((u: any) => u.id === user.id), 1, response);
+        await updateUserState({ id: user.id, state: 'active' });     
         users.rehidrate();
+
     }
 }
 </script>

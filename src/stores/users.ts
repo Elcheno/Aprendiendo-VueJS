@@ -1,24 +1,26 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import { signal } from '@/lib/signal';
 
 export const useUsersStore = defineStore('users', () => {
-    const users = ref<{ userList: any[], revalidate: boolean }>({
-        revalidate: true,
-        userList: []
-    });
+    const usersSignal = signal({ userList: [] });
+
+    const revalidate = signal(true);
 
     const set = (value: any) => {
-        users.value.userList = value;
-        users.value.revalidate = false;
+        usersSignal.set(value);
+        revalidate.set(false);
     };
 
     const add = (value: any) => {
-        users.value.userList.push(value);
+        usersSignal.set((state: any) => {
+            state.userList.push(value);
+        })
     };
 
     const rehidrate = () => {
-        users.value.revalidate = true;
+        revalidate.set(true);
     };
 
-    return { users, set, add, rehidrate };
+    return { usersSignal, set, add, rehidrate, revalidate };
 });

@@ -9,28 +9,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import DropdownUsersTable from './dropdown-users-table.vue';
-import { updateUserState } from '@/services/data-public';
 import { ref } from 'vue';
-import { useUsersStore } from '@/stores/users';
 
 const props = defineProps(['list']);
-
-const userList = ref(props.list);
-const users = useUsersStore();
-
-const updateStateUser = async (user: any) => {
-    if (user.value.state === 'active') {
-        await updateUserState({ id: user.value.id, state: 'inactive' });
-        users.set(users.users.userList.map((u: any) => user.id === u.id ? { ...u, state: 'inactive'} : u))
-        users.rehidrate(); 
-    } else {
-        await updateUserState({ id: user.value.id, state: 'active' });
-        console.log(users.users.userList.map((u: any) => user.id === u.id ? { ...u, state: 'active'} : u));
-        
-        users.rehidrate();
-    }
-}
-
+const itemList = ref(props.list);
 </script>
 
 <template>
@@ -45,11 +27,11 @@ const updateStateUser = async (user: any) => {
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="user in userList" :key="user.id">
-        <TableCell>{{ user.email }}</TableCell>
-        <TableCell>{{ user.name }}</TableCell>
-        <TableCell>{{ user.state }}</TableCell>
-        <TableCell> <DropdownUsersTable :user="user" /> </TableCell>
+      <TableRow v-for="item in itemList()" :key="item.id">
+        <TableCell>{{ item.email }}</TableCell>
+        <TableCell>{{ item.name }}</TableCell>
+        <TableCell>{{ item.state }}</TableCell>
+        <TableCell> <DropdownUsersTable :user="item" /> </TableCell>
       </TableRow>
     </TableBody>
   </Table>
