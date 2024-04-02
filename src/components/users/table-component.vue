@@ -11,21 +11,23 @@ import {
 import DropdownUsersTable from './dropdown-users-table.vue';
 import { updateUserState } from '@/services/data-public';
 import { ref } from 'vue';
+import { useUsersStore } from '@/stores/users';
 
-const props = defineProps([
-  'list']);
+const props = defineProps(['list']);
 
 const userList = ref(props.list);
+const users = useUsersStore();
 
 const updateStateUser = async (user: any) => {
     if (user.value.state === 'active') {
-        const response = await updateUserState({ id: user.value.id, state: 'inactive' });
-        console.log(response);
-    
+        await updateUserState({ id: user.value.id, state: 'inactive' });
+        users.set(users.users.userList.map((u: any) => user.id === u.id ? { ...u, state: 'inactive'} : u))
+        users.rehidrate(); 
     } else {
-        const response = await updateUserState({ id: user.value.id, state: 'active' });
-        console.log(response);
-
+        await updateUserState({ id: user.value.id, state: 'active' });
+        console.log(users.users.userList.map((u: any) => user.id === u.id ? { ...u, state: 'active'} : u));
+        
+        users.rehidrate();
     }
 }
 

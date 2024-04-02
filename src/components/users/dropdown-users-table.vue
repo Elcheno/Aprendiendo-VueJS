@@ -16,17 +16,22 @@ const props = defineProps([
   'user'
 ])
 
-const user = ref(props.user);
+const user = props.user;
 const users = useUsersStore();
 
 const updateStateUser = async () => {
-    if (user.value.state === 'active') {
-        const response = await updateUserState({ id: user.value.id, state: 'inactive' });
-        if (response) users.rehidrate();
-
+    console.log(user);
+    
+    if (user.state === 'active') {
+        const response = await updateUserState({ id: user.id, state: 'inactive' });
+        console.log(response);
+        users.users.userList.splice(users.users.userList.findIndex((u: any) => u.id === user.id), 1, response);
+        users.rehidrate(); 
     } else {
-        const response = await updateUserState({ id: user.value.id, state: 'active' });
-        if (response) users.rehidrate();
+        const response = await updateUserState({ id: user.id, state: 'active' });     
+        console.log(response); 
+        users.users.userList.splice(users.users.userList.findIndex((u: any) => u.id === user.id), 1, response);
+        users.rehidrate();
     }
 }
 </script>

@@ -2,21 +2,21 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
 export const useUsersStore = defineStore('users', () => {
-    const users = ref<any>({
-        userList: null,
-        revalidate: false
+    const users = ref<{ userList: any[], revalidate: boolean }>({
+        revalidate: true,
+        userList: []
     });
 
     const set = (value: any) => {
         users.value.userList = value;
+        users.value.revalidate = false;
     };
 
     const add = (value: any) => {
-        users.value.push(value);
+        users.value.userList.push(value);
     };
 
     const rehidrate = () => {
-        console.log(users);
         users.value.revalidate = true;
     };
 
