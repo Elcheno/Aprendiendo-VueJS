@@ -1,16 +1,27 @@
 <script setup lang="ts">
 import TableComponent from '@/components/users/table-component.vue';
 import { fetchAllUsers } from '@/services/data-public';
-import { onMounted, ref } from 'vue';
+import { watch } from 'vue';
+import { useUsersStore } from '@/stores/users';
 
-const users = ref(null);
+const users = useUsersStore();
 
-const response = await fetchAllUsers({ page: 1 });
-if (response !== null) users.value = response;
-console.log(users.value);
+const fetchData = async () => {
+    console.log('fetching data');
+    
+    const response = await fetchAllUsers({ page: 1 });
+    if (response !== null) users.set(response); 
+}
 
+console.log(users);
+
+watch(users.users.revalidate, () => {
+    fetchData();
+});
+
+await fetchData();
 </script>
 
 <template>
-    <TableComponent :list="users"/>
+    <TableComponent :list="users.users.userList"/>
 </template>
