@@ -26,7 +26,6 @@ const links = ref([
     <div class="flex gap-1 h-16 px-2 mt-2">
         <div v-for="link in links" :key="link.title" class="h-min">
             <RouterLink :to="`${link.path}`" class="flex items-center gap-2 text-slate-800 rounded-lg px-3 py-2 transition-colors">
-                <component :is="link.icon" class="h-6 w-6" />
                 {{ link.title }}
             </RouterLink>
         </div>
