@@ -23,16 +23,24 @@ watchEffect( async () => {
     user = props.user;
 });
 
-const updateStateUser = async () => {    
+const updateStateUser = () => { 
     if (user.state === 'active') {        
-        await updateUserState({ id: user.id, state: 'inactive' });
-        users.rehidrate(); 
-
+        updateUserState({ id: user.id, state: 'inactive' }).then((res: any) => {
+            users.set((state: any) => {
+               return state.users.map((u: any) => u.id === res.id ? res : u); 
+            });
+            users.rehidrate();
+        })
     } else {
-        await updateUserState({ id: user.id, state: 'active' });     
-        users.rehidrate();
+        updateUserState({ id: user.id, state: 'active' }).then(( res: any) => {
+            users.set((state: any) => {
+               return state.users.map((u: any) => u.id === res.id ? res : u); 
+            });
+            users.rehidrate();
+        })     
 
     }
+    
 }
 </script>
 

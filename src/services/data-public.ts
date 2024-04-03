@@ -22,7 +22,9 @@ export async function singUp({ name, email, password }: { name: string, email: s
 
 export async function updateUserState({ id, state }: { id: string, state: string }) {
     const session = useSessionStore();
-        
+    
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
     return await axios.put(
             `http://localhost:8200/user/state`, 
             { id, state }, 

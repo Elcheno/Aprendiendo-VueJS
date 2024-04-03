@@ -14,9 +14,11 @@ const fetchData = async () => {
 }
 
 await fetchData();
-watch(revalidate.value, () => {
+
+/*watch(revalidate.value, () => {
     fetchData(); 
-});
+});*/
+
 </script>
 
 <template>
