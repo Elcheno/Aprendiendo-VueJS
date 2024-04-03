@@ -4,6 +4,7 @@ import IconAbout from "./IconAbout.vue"
 import IconSignOut from "./IconSignOut.vue"
 import IconDropdown from "./IconDropdown.vue";
 import IconSignIn from "./IconSignIn.vue";
+import IconRefresh from "./IconRefresh.vue";
 
 export {
     IconHome,
@@ -11,5 +12,6 @@ export {
     IconAbout,
     IconSignOut,
     IconDropdown,
-    IconSignIn
+    IconSignIn,
+    IconRefresh
 }

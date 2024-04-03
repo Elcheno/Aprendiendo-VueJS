@@ -1,4 +1,4 @@
-import { shallowRef } from 'vue'
+import { shallowRef } from 'vue';
 
 export function signal(initialValue: any) {
   const r = shallowRef(initialValue)

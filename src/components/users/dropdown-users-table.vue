@@ -26,18 +26,16 @@ watchEffect( async () => {
 const updateStateUser = () => { 
     if (user.state === 'active') {        
         updateUserState({ id: user.id, state: 'inactive' }).then((res: any) => {
-            users.set((state: any) => {
-               return state.users.map((u: any) => u.id === res.id ? res : u); 
-            });
+            const result = users.usersSignal().map((u: any) => u.id === res.id ? res : u); 
+            users.set(result);
             users.rehidrate();
-        })
+        });
     } else {
         updateUserState({ id: user.id, state: 'active' }).then(( res: any) => {
-            users.set((state: any) => {
-               return state.users.map((u: any) => u.id === res.id ? res : u); 
-            });
+            const result = users.usersSignal().map((u: any) => u.id === res.id ? res : u); 
+            users.set(result);
             users.rehidrate();
-        })     
+        });
 
     }
     

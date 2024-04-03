@@ -9,21 +9,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import DropdownUsersTable from './dropdown-users-table.vue';
-import { ref, onMounted } from 'vue';
-import spinnerComponent from '../spinner-component.vue';
+import { ref } from 'vue';
+import tableLoader from './table-loader.vue';
 
 const props = defineProps(['list']);
 const itemList = ref(props.list);
-//const tableLoader = ref(null) as any;
-
-/**const toggleTableLoader = () => {
-  tableLoader.value?.classList.toggle('hidden');
-}
-
-onMounted(() => {
-  toggleTableLoader();
-});**/
-
 </script>
 
 <template>
@@ -38,6 +28,7 @@ onMounted(() => {
       </TableRow>
     </TableHeader>
     <TableBody>
+      <tableLoader />
       <TableRow v-for="item in itemList()" :key="item.id">
         <TableCell>{{ item.email }}</TableCell>
         <TableCell>{{ item.name }}</TableCell>

@@ -7,9 +7,12 @@ export const useUsersStore = defineStore('users', () => {
 
     const revalidate = signal(true);
 
+    const reload = signal(false);
+
     const set = (value: any) => {
         usersSignal.set(value);
         revalidate.set(false);
+        reload.set(false);
     };
 
     const add = (value: any) => {
@@ -22,5 +25,10 @@ export const useUsersStore = defineStore('users', () => {
         revalidate.set(true);
     };
 
-    return { usersSignal, set, add, rehidrate, revalidate };
+    const reloadUsers = () => {
+        rehidrate();
+        reload.set(true);
+    }
+
+    return { usersSignal, set, add, rehidrate, revalidate, reloadUsers, reload };
 });

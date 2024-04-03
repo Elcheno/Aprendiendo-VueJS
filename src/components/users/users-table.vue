@@ -3,9 +3,10 @@ import TableComponent from '@/components/users/table-component.vue';
 import { fetchAllUsers } from '@/services/data-public';
 import { useUsersStore } from '@/stores/users';
 import { ref, watch } from 'vue';
+import refreshButton from '../refresh-button.vue';
 
 const usersStore = useUsersStore();
-const revalidate = ref(usersStore.revalidate);
+const reload = ref(usersStore.reload);
 const userList = ref(usersStore.usersSignal);
 
 const fetchData = async () => {
@@ -15,12 +16,15 @@ const fetchData = async () => {
 
 await fetchData();
 
-/*watch(revalidate.value, () => {
+watch(reload.value, () => {
     fetchData(); 
-});*/
+});
 
 </script>
 
 <template>
     <TableComponent :list="userList"/>
+    <div class="flex justify-center mt-12">
+        <refreshButton />
+    </div>
 </template>
